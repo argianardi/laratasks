@@ -1,0 +1,1 @@
+Dari router ke view
