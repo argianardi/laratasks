@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Halo\HaloController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +19,7 @@ Route::get('/router-controller', [HaloController::class, 'index']);
 // Dari Router ke Controller ke View
 Route::get('/router-controller-view', [HaloController::class, 'routerControllerView']);
 
-Route::get('/todo', function () {
-    return view('todo.app');
+Route::controller(TodoController::class)->group(function () {
+    Route::get('/todo', 'index')->name('todo');
+    Route::post('/todo', 'store')->name('todo.post');
 });
