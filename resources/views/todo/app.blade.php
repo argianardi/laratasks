@@ -6,21 +6,21 @@
         <div class="container-fluid col-md-7">
             <div class="navbar-brand">Simple To Do List</div>
             <!--
-                                                                                        <div class="navbar-collapse justify-content-end" id="navbarNav">
-                                                                                            <ul class="navbar-nav">
-                                                                                                <li class="nav-item dropdown">
-                                                                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                                                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                                        Akun Saya
-                                                                                                    </a>
-                                                                                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                                                                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                                                                                                        <li><a class="dropdown-item" href="#">Update Data</a></li>
-                                                                                                    </ul>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                    -->
+                                                                                                                    <div class="navbar-collapse justify-content-end" id="navbarNav">
+                                                                                                                        <ul class="navbar-nav">
+                                                                                                                            <li class="nav-item dropdown">
+                                                                                                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                                                                                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                                                                    Akun Saya
+                                                                                                                                </a>
+                                                                                                                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                                                                                                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                                                                                                                                    <li><a class="dropdown-item" href="#">Update Data</a></li>
+                                                                                                                                </ul>
+                                                                                                                            </li>
+                                                                                                                        </ul>
+                                                                                                                    </div>
+                                                                                                                -->
         </div>
     </nav>
 
@@ -75,7 +75,9 @@
                             @foreach ($tasks as $task)
                                 <!-- 04. Display Data -->
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span class="task-text">{{ $task->task }}</span>
+                                    {!! $task->is_done == '1' ? '<del>' : '' !!}
+                                    {{ $task->task }}
+                                    {!! $task->is_done == '1' ? '</del>' : '' !!}
                                     <input type="text" class="form-control edit-input" style="display: none;"
                                         value="{{ $task->task }}">
                                     <div class="btn-group">
@@ -86,12 +88,14 @@
                                 </li>
                                 <!-- 05. Update Data -->
                                 <li class="list-group-item collapse" id="collapse-{{ $loop->index }}">
-                                    <form action="" method="POST">
+                                    <form action="{{ route('todo.update', ['id' => $task->id]) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
                                         <div>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="{{ $task->id }}"
+                                                <input type="text" class="form-control" name="task"
                                                     value="{{ $task->task }}">
-                                                <button class="btn btn-outline-primary" type="button">Update</button>
+                                                <button class="btn btn-outline-primary" type="submit">Update</button>
                                             </div>
                                         </div>
                                         <div class="d-flex">
