@@ -13,15 +13,7 @@ class TodoController extends Controller
     public function index()
     {
         $tasks = todo::orderBy('task', 'asc')->get();
-        return view('todo.app', ['tasks' => $tasks]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('todo.app', compact('tasks'));
     }
 
     /**
@@ -44,27 +36,25 @@ class TodoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(todo $todo)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(todo $todo)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, todo $todo)
+    public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'task' => 'required|min:3|max:25',
+        ], [
+            'task.required' => 'Input task wajib diisi',
+            'task.min' => 'Input task minimal 3 karakter',
+            'task.max' => 'Input task maksimal 25 karakter'
+        ]);
+
+        $data = [
+            'task' => $request->task,
+            'is_done' => $request->is_done
+        ];
+
+        todo::where('id', $id)->update($data);
+        return redirect()->route('todo')->with('success', 'Berhasil menyimpan perubahan data');
     }
 
     /**
