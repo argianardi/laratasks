@@ -132,6 +132,19 @@ Route::get('/', function () {
 -   `use Illuminate\Support\Facades\Route;`: Mengimpor kelas `Route` dari namespace `Illuminate\Support\Facades`.
 -   `Route::get('/', function () { 'welcome' });`: Mendefinisikan route menggunakan metode `get()`. Route ini menangani permintaan HTTP GET pada URL root ('/'). Fungsi anonim yang diberikan akan dipanggil saat route diakses. Dalam contoh ini, ia mengembalikan view 'welcome'. 'welcome' merupakan nama file yang terletak di folder `resources/views/welcome.blade.php`.
 
-## Urutan Buat Project
+## Alur Jalannya Development
 
-view(blade) -> controller -> view
+-   Install Laravel 11
+-   Setting DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME dan DB_PASSWORD
+-   Membuat controller, model, dan migration dengan command
+    ```
+    php artisan make:model {nama_table} -mrc
+    ```
+-   Tambahkan column pada table di folder migration dengan nama file berformat `YYYY_MM_DD_HHMMSS_create_namaTable_table.php`
+-   Jalankan command
+    `php artisan migrate`
+-   Tambahkan function di file controller yang sudah dibuat tadi.
+-   Tambahkan router dengan memanfaat function yang didefine di controller
+-   Tambahkan protected untuk table dan column di bagian models
+
+view(blade) -> controller -> route
